@@ -14,6 +14,6 @@ class TestingConfig(BaseConfig):
 
 configs = {
 	'development':DevelopmentConfig,
-	'production':ProductionConfig
+	'production':ProductionConfig,
 	'testing':TestingConfig
 }
