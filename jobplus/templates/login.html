@@ -3,6 +3,23 @@
 {% block title %}login{% endblock %}
 
 {% block body %}
-<h1>用户登录</h1>
+
+<div class="form">
+<form method="POST" action="{{url_for('front.login')}}">
+    {{forms.csrf_token}}
+    <div class="form-group">
+        {{forms.email.label}} {{forms.email(class='form-control')}}
+    </div>
+    <div class="form-group">
+        {{forms.password.label}} {{forms.password(class='form-control')}}
+    </div>
+    <div class="check-box">
+        <label>
+            {{forms.remember_me()}}
+            {{forms.remember_me.text}}
+            </label>
+    </div>
+</form>
+</div>
 {% endblock %}
 

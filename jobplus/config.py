@@ -1,5 +1,6 @@
 class BaseConfig():
-	SCRET_KEY ='makesure to set a very secret key'
+    
+    SECRET_KEY = 'to keep it secret'
 
 class DevelopmentConfig(BaseConfig):
 	DEBUG = True

@@ -1,4 +1,5 @@
 from flask import Blueprint,render_template
+from jobplus.forms import UserRegisterForm,CompanyRegisterForm,LoginForm
 
 front = Blueprint('front',__name__)
 
@@ -8,12 +9,18 @@ def index():
 
 @front.route('/user_register')
 def user_register():
-    return render_template('user_register.html')
+    forms = UserRegisterForm()
+    return render_template('user_register.html',forms=forms)
 
 @front.route('/comp_register')
 def comp_register():
-    return render_template('comp_register.html')
+    forms = CompanyRegisterForm()
+    return render_template('comp_register.html',forms = forms)
 
 @front.route('/login')
 def login():
-    return render_template('login.html')
+    forms = LoginForm()
+    return render_template('login.html',forms = forms)
+
+
+
