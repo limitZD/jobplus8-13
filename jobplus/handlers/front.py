@@ -21,7 +21,7 @@ def user_register():
 def comp_register():
     forms = CompanyRegisterForm()
     if forms.validate_on_submit():
-        forms.create_user()
+        forms.create_company()
         flash('注册成功，请登录！','success')
         return redirect(url_for('.login'))
     return render_template('comp_register.html',forms = forms)
