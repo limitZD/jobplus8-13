@@ -3,18 +3,18 @@ class BaseConfig():
     SECRET_KEY = 'to keep it secret'
 
 class DevelopmentConfig(BaseConfig):
-	DEBUG = True
-	SQLALCHEMY_DATABASE_URI = 'mysql://root@localhost:3306/jobplus?charset=utf-8'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root@localhost:3306/jobplus?charset=utf8'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class ProductionConfig(BaseConfig):
-	pass
+    pass
 
 class TestingConfig(BaseConfig):
-	pass
+    pass
 
 
 configs = {
-	'development':DevelopmentConfig,
-	'production':ProductionConfig,
-	'testing':TestingConfig
+    'development':DevelopmentConfig,
+    'production':ProductionConfig,
+    'testing':TestingConfig
 }
