@@ -22,13 +22,28 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/">jobplus<span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">职位</a></li>
-                    <li><a href="#">公司</a></li>
+                    <li><a href="{{url_for('job.job_list')}}">职位</a></li>
+                    <li><a href="{{url_for('company.company_list')}}">公司</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{url_for('front.user_register')}}">用户注册</a></li>
-                    <li><a href="{{url_for('front.comp_register')}}">企业注册</a></li>
-                    <li><a href="{{url_for('front.login')}}">登录</a></li>
+                    {% if not current_user.is_authonticated %}
+                        <li><a href="{{url_for('front.user_register')}}">用户注册</a></li>
+                        <li><a href="{{url_for('front.comp_register')}}">企业注册</a></li>
+                        <li><a href="{{url_for('front.login')}}">登录</a></li>
+                    {% else %}
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{ current_user.username}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                               <li><a href="#">个人主页</a></li>
+                               <li><a href="#">退出登录</a></li>
+                               <li role="separator" class="divider"></li>
+                               <li><a href="#">Separated link</a></li>
+                            </ul>
+                         </div>
+                    {% endif %}
                 </ul>
             </div>
         </div>

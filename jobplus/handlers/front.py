@@ -1,6 +1,7 @@
 from flask import Blueprint,render_template,flash,redirect,url_for
 from jobplus.forms import UserRegisterForm,CompanyRegisterForm,LoginForm
-
+from flask_login import login_user
+from jobplus.models import User
 
 front = Blueprint('front',__name__)
 
@@ -26,10 +27,13 @@ def comp_register():
         return redirect(url_for('.login'))
     return render_template('comp_register.html',forms = forms)
 
-@front.route('/login')
+@front.route('/login',methods=['GET','POST'])
 def login():
     forms = LoginForm()
+    if forms.validate_on_submit():
+        user = User.query.filter_by(email=forms.email.data).first()
+        login_user(user,forms.remember_me.data)
+        return redirect(url_for('user.profile'))
     return render_template('login.html',forms = forms)
-
 
 

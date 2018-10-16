@@ -32,7 +32,7 @@ class CompanyRegisterForm(FlaskForm):
     username = StringField("企业名称",validators=[DataRequired(),Length(4,24)])
     email = StringField('邮箱',validators=[DataRequired(),Email()])
     password = PasswordField('密码',validators=[DataRequired(),Length(6,24)])
-    repeat_password = PasswordField('重复密码',validators=[DataRequired(),EqualTo(password)])
+    repeat_password = PasswordField('重复密码',validators=[DataRequired(),EqualTo('password')])
     submit = SubmitField('提交')
 
     def create_company(self):
@@ -52,11 +52,11 @@ class LoginForm(FlaskForm):
     submit = SubmitField('提交')
  
     def validate_email(self,field):
-        if not User.query.filter_by(email==field.data).first():
+        if not User.query.filter_by(email=field.data).first():
             raise ValidationError('邮箱错误!')
 
     def validate_password(self,field):
-        user = User.query.filter_by(password==field.data).first()
+        user = User.query.filter_by(password=field.data).first()
         if user and not user.check_password(field.data):
             raise ValidationError('密码错误!')
 
