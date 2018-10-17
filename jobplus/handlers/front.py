@@ -1,6 +1,6 @@
 from flask import Blueprint,render_template,flash,redirect,url_for
 from jobplus.forms import UserRegisterForm,CompanyRegisterForm,LoginForm
-from flask_login import login_user
+from flask_login import login_user,logout_user,login_required
 from jobplus.models import User
 
 front = Blueprint('front',__name__)
@@ -32,8 +32,21 @@ def login():
     forms = LoginForm()
     if forms.validate_on_submit():
         user = User.query.filter_by(email=forms.email.data).first()
-        login_user(user,forms.remember_me.data)
-        return redirect(url_for('user.profile'))
+        
+        if user.query.filter_by(role=20).first():
+            login_user(user,forms.remember_me.data)
+            return redirect(url_for('company.profile'))
+        elif user.query.filter_by(role=30).first():
+            login_user(user,forms.remember_me.data)
+            return redirect(url_for('admin.profile'))
+        else:           
+            login_user(user,forms.remember_me.data)
+            return redirect(url_for('user.profile'))
     return render_template('login.html',forms = forms)
 
-
+@front.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('tui chu','success')
+    return redirect(url_for('.index'))

@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 
 def register_extension(app):
     db.init_app(app)
-    Migrate(db,app)
+    Migrate(app,db)
     login_manager = LoginManager()
     login_manager.init_app(app)
 
