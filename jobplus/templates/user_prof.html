@@ -1,5 +1,11 @@
 {% extends "base.html" %}
+{% from "macros.html" import render_form %}
+
+{% block title %}Profile{% endblock %}
 
 {% block body %}
-<h1>ge ren xin xi </h1>
+<div class="form">
+<h1>个人信息</h1>
+{{ render_form(form,url_for('user.profile'))}}
+</div>
 {% endblock %}

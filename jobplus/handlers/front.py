@@ -33,10 +33,10 @@ def login():
     if forms.validate_on_submit():
         user = User.query.filter_by(email=forms.email.data).first()
         
-        if user.query.filter_by(role=20).first():
+        if user.is_company():
             login_user(user,forms.remember_me.data)
             return redirect(url_for('company.profile'))
-        elif user.query.filter_by(role=30).first():
+        elif user.is_admin():
             login_user(user,forms.remember_me.data)
             return redirect(url_for('admin.profile'))
         else:           

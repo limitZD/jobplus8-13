@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField,BooleanField,ValidationError
-from wtforms.validators import DataRequired,Length,Email,EqualTo
+from wtforms import StringField,PasswordField,SubmitField,BooleanField,ValidationError,IntegerField
+from wtforms.validators import DataRequired,Length,Email,EqualTo,InputRequired
 from .models import db,User
 
 class UserRegisterForm(FlaskForm):
@@ -60,3 +60,20 @@ class LoginForm(FlaskForm):
         if user and not user.check_password(field.data):
             raise ValidationError('密码错误!')
 
+class UserProfileForm(FlaskForm):
+    name = StringField('姓名',validators=[DataRequired(),Length(4,24)])
+    email = StringField('邮箱',validators=[DataRequired(),Email()])
+    password = PasswordField('密码',validators=[Length(6,24)])
+    phone = IntegerField('手机号',validators=[InputRequired()])
+    working_life = IntegerField('工作年限',validators=[InputRequired()])
+    person_file = StringField('上传简历')
+    submit = SubmitField('提交')
+
+    def update_profile(self,user):
+        user.username = self.name.data
+        user.email = self.email.data
+        user.password = self.password.data
+        user.phone = self.phone.data
+        user.working_life = self.working_life.data
+        db.session.add(user)
+        db.session.commit()
