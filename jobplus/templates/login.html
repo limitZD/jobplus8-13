@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html"%}
 {% from 'macros.html' import render_form %}
 
@@ -11,3 +12,18 @@
   </div>
 {% endblock %}
 
+=======
+{% extends "base.html" %}
+{% from "macros.html" import render_form %}
+
+{% block title %}
+Login
+{% endblock %}
+
+<div class="form">
+{% block body %}
+  <h2>登录</h2>
+  {{ render_form(form,url_for('front.login')) }}
+</div>
+{% endblock %}
+>>>>>>> upstream/master

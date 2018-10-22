@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Blueprint,render_template,flash,redirect,url_for
 from jobplus.forms import UserProfileForm
 from flask_login import current_user,login_required
@@ -15,3 +16,12 @@ def profile():
     return render_template('user_prof.html',form = form)
 
 
+=======
+from flask import Blueprint,render_template, flash, redirect,url_for, request
+from flask_login import login_required, current_user
+#from jobplus.forms import UserProfileForm
+
+user = Blueprint('user', __name__, url_prefix='/user')
+
+#@user.route('/profile',methods=)
+>>>>>>> upstream/master
