@@ -63,15 +63,40 @@ class LoginForm(FlaskForm):
         if field.data and not User.query.filter_by(email=field.data).first():
             raise ValidationError('邮箱没有注册')
 
-def validate_password(self,field):
+    def validate_password(self,field):
         user = User.query.filter_by(email=self.email.data).first()
         if user and not user.check_password(field.data):
             raise ValidationError('密码不正确')
 
 
+class UserProfileForm(FlaskForm):
+
+    name = StringField('用户姓名',validators=[Required(),Length(4,24)])
+    email = StringField('邮箱',validators=[Required(),Email()])
+    password = PasswordField('密码(不填写保持不变)',validators=[Length(6,24)])
+    work_years = IntegerField('工作年限')
+    phone = IntegerField('电话号码')
+    resume_url = StringField('简历地址')
+    submit = SubmitField('提交')
+
+    def update_profile(self,user):
+        user.name = self.name.data
+        user.email = self.email.data
+        if self.password.data:
+            user.password = self.password.data
+        user.phonenumber = self.phone.data
+        user.work_years = self.work_years.data
+        user.resume_url = self.resume_url.data
+
+    def validate_phone(self,field)
+        phone = field.data
+        if phone[:2] not in ('13','15','18') and len(phone) != 11:
+        raise ValidationError('请输入有效的手机号')
+
+
 class CompanyProfileForm(FlaskForm):
     name = StringField('企业名称')
-    email = StringField('邮箱',validators=[Required(),Email])
+    email = StringField('邮箱',validators=[Required(),Email()])
     password = PasswordField('密码(不填写保持不变)')
     slug = StringField('Slug',validators=[Required(),Length(3,24)])
     location = StringField('地址',validators=[Length(0,64)])

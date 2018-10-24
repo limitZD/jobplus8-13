@@ -37,7 +37,8 @@ class User(Base,UserMixin):
     username = db.Column(db.String(32),unique=True, nullable=False)
 
     name = db.Column(db.String(32))
-    phonenumber = db.Column(db.String(32))
+    phonenumber = db.Column(db.String(11))
+    work_years = db.Column(db.SmallInteger())
     #邮箱
     email = db.Column(db.String(64),unique=True,index=True,nullable=False)
     #密码
