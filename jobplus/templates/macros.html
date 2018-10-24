@@ -1,32 +1,3 @@
-<<<<<<< HEAD
-{% macro render_form(forms,url) %}
-<form method="POST" action="{{ url }}">
-    {{forms.csrf_token}}
-    {% for field in forms %}
-        {% if field.type =='CSRFTokenField'  %}
-            {{' '}}
-        {% elif field.type =='SubmitField' %}
-            {{field(class="btn btn-primary")}}
-        {% elif field.type == 'BooleanField'%}
-            <div class="check-box">    
-                <label>
-                    {{field()}}{{field.label.text}}
-                </label>
-            </div>
-        {% else %}
-        <div class="form-group {% if field.errors %}has-error{% endif %}">
-          {{field.label}}{{field(class="form-control")}}
-          {% if field.errors %}
-            {% for e in field.errors %}
-              <span class='help-block'>{{ e }}</span>
-            {% endfor %}
-          {% endif %}
-        </div>
-        {% endif%}
-     {% endfor%}
-</form>
-{% endmacro%}
-=======
 {% macro render_form(form,url) %}
 <form method='POST' action="{{ url }}">
     {{ form.csrf_token }}
@@ -129,4 +100,4 @@
   </div>
 </div>
 {% endmacro %}
->>>>>>> upstream/master
+

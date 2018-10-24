@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-from flask import Blueprint,render_template
-
-admin = Blueprint('admin',__name__,url_prefix='/admin')
-
-@admin.route('/profile')
-def profile():
-    return render_template('comp_prof.html')
-=======
 from flask import Blueprint, render_template, request, current_app, redirect, url_for, flash
 from jobplus.decorators import admin_required
 from jobplus.models import User, db
@@ -83,4 +74,3 @@ def disable_user(user_id):
     return redirect(url_for('admin.users'))
 
 
->>>>>>> upstream/master

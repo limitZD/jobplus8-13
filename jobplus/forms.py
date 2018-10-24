@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField,BooleanField,ValidationError,IntegerField
-from wtforms.validators import DataRequired,Length,Email,EqualTo,InputRequired
-from .models import db,User
-
-class UserRegisterForm(FlaskForm):
-    username = StringField("用户名",validators=[DataRequired(),Length(4,24)])
-    email = StringField('邮箱',validators=[DataRequired(),Email()])
-    password = PasswordField('密码',validators=[DataRequired(),Length(6,24)])
-    repeat_password = PasswordField('重复密码',validators=[DataRequired(),EqualTo('password')])
-    submit = SubmitField('提交')
-    
-=======
-# -*- coding: UTF-8 -*-
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, ValidationError, TextAreaField
 from wtforms.validators import Length,Email,EqualTo,Required
@@ -25,7 +10,6 @@ class UserregisterForm(FlaskForm):
     repeat_password = PasswordField('重复密码',validators=[Required(),EqualTo('password')])
     submit = SubmitField('提交')
 
->>>>>>> upstream/master
     def create_user(self):
         user = User()
         user.username = self.username.data
@@ -34,67 +18,7 @@ class UserregisterForm(FlaskForm):
         db.session.add(user)
         db.session.commit()
         return user
-
-<<<<<<< HEAD
-    def validate_name(self,field):
-        if User.query.filter_by(username=field.data).first():
-            raise ValidationError("此用户名己存在！")
-
-    def validate_email(self,field):
-        if User.query.filter_by(email=field.data).first():
-             raise ValidationError("此邮箱己存在！")
-              
-
-class CompanyRegisterForm(FlaskForm):
-    username = StringField("企业名称",validators=[DataRequired(),Length(4,24)])
-    email = StringField('邮箱',validators=[DataRequired(),Email()])
-    password = PasswordField('密码',validators=[DataRequired(),Length(6,24)])
-    repeat_password = PasswordField('重复密码',validators=[DataRequired(),EqualTo('password')])
-    submit = SubmitField('提交')
-
-    def create_company(self):
-         user = User()
-         user.username = self.username.data
-         user.email = self.email.data
-         user.password = self.password.data
-         user.role = 20
-         db.session.add(user)
-         db.session.commit()
-         return user
-
-class LoginForm(FlaskForm):
-    email = StringField('邮箱',validators=[DataRequired(),Email()])
-    password = PasswordField('密码',validators=[DataRequired(),Length(6,24)])
-    remember_me = BooleanField('记住我')
-    submit = SubmitField('提交')
- 
-    def validate_email(self,field):
-        if not User.query.filter_by(email=field.data).first():
-            raise ValidationError('邮箱错误!')
-
-    def validate_password(self,field):
-        user = User.query.filter_by(password=field.data).first()
-        if user and not user.check_password(field.data):
-            raise ValidationError('密码错误!')
-
-class UserProfileForm(FlaskForm):
-    name = StringField('姓名',validators=[DataRequired(),Length(4,24)])
-    email = StringField('邮箱',validators=[DataRequired(),Email()])
-    password = PasswordField('密码',validators=[Length(6,24)])
-    phone = IntegerField('手机号',validators=[InputRequired()])
-    working_life = IntegerField('工作年限',validators=[InputRequired()])
-    person_file = StringField('上传简历')
-    submit = SubmitField('提交')
-
-    def update_profile(self,user):
-        user.username = self.name.data
-        user.email = self.email.data
-        user.password = self.password.data
-        user.phone = self.phone.data
-        user.working_life = self.working_life.data
-        db.session.add(user)
-        db.session.commit()
-=======
+   
     def validate_username(self,field):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('用户名已经存在')
@@ -118,15 +42,15 @@ class CompanyregisterForm(FlaskForm):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('邮箱已经存在')
 
-    def create_user(self):
+    def create_company(self):
         user = User()
         user.username = self.username.data
         user.email = self.email.data
+        user.roll = 20
         user.password =self.password.data
         db.session.add(user)
         db.session.commit()
         return user
-
 
 
 class LoginForm(FlaskForm):
@@ -138,10 +62,12 @@ class LoginForm(FlaskForm):
     def validate_email(self,field):
         if field.data and not User.query.filter_by(email=field.data).first():
             raise ValidationError('邮箱没有注册')
-    def validate_password(self,field):
+
+def validate_password(self,field):
         user = User.query.filter_by(email=self.email.data).first()
         if user and not user.check_password(field.data):
             raise ValidationError('密码不正确')
+
 
 class CompanyProfileForm(FlaskForm):
     name = StringField('企业名称')
@@ -159,9 +85,11 @@ class CompanyProfileForm(FlaskForm):
         phone = field.data
         if phone[:2] not in ('13','15','18') and len(phone) != 11:
             raise ValidationError('请输入有效的手机号')
+
     def updated_profile(self,user):
         user.name = self.name.data
         user.email = self.email.data
+        
         if self.password.data:
             user.password = self.password.data
 
@@ -209,10 +137,10 @@ class CompanyEditForm(FlaskForm):
         else:
             detail = CompanyDetail()
             detail.user_id = company.id
-            detail.site = self.site.data
-            setail.description = self.description.data
-            db.session.add(company)
-            db.session.add(detail)
-            db.session.commit()
+        detail.site = self.site.data
+        setail.description = self.description.data
+        db.session.add(company)
+        db.session.add(detail)
+        db.session.commit()
 
->>>>>>> upstream/master
+

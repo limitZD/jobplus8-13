@@ -50,8 +50,3 @@ def detail(company_id):
 
 
 
-
-
-
-
-
